@@ -1,0 +1,667 @@
+#:import Snackbar kivymd.uix.snackbar.Snackbar
+#:import images_path kivymd.images_path
+#:import Clipboard kivy.core.clipboard.Clipboard
+<ContentNavigationDrawer>:
+	orientation: "vertical"
+	padding: "8dp"
+	spacing: "8dp"
+	AnchorLayout:
+		anchor_x: "center"
+		size_hint_y: None
+		height: avatar.height
+
+		Image:
+			id: avatar
+			size_hint: None, None
+			size: "200dp", "170dp"
+			source: "ONA.png"
+
+
+	RecycleView:
+
+		FloatLayout:
+
+			MDFillRoundFlatButton:
+				ripple_alpha: 0
+				size_hint:(.8, .1)
+				pos_hint:{'x':.1, 'y':.77}
+				md_bg_color: app.theme_cls.primary_color
+				text: app.fix_text("آخر الأخبار")
+				font_name: 'Janna LT Bold'
+				on_release:
+					root.nav_drawer.set_state("close")
+					app.screen_manager("scr 1")
+					app.screen.ids.md_list1.clear_widgets()
+					app.loading_callback()
+
+			MDFillRoundFlatButton:
+				ripple_alpha: 0
+				size_hint:(.8, .1)
+				pos_hint:{'x':.1, 'y':.60}
+				md_bg_color: app.theme_cls.primary_color
+				text: app.fix_text("موقع الوكالة")
+				font_name: 'Janna LT Bold'
+				on_release:
+					import webbrowser
+					webbrowser.open('https://omannews.gov.om/')
+					root.nav_drawer.set_state("close")
+
+			MDLabel:
+				font_style:"SubtitleA"
+				text_size: self.width, None
+				pos_hint:{'x':-.1, 'y':.1}
+				theme_text_color: "Primary"
+				halign:'right'
+				size_hint_y: None
+				height: self.texture_size[1]
+				text: app.fix__copyrighttext("جميع الحقوق محفوظة ل وكالة الأنباء العمانية (العمانية)© ")
+
+<ConnectionError>:
+	size_hint_y: None
+	BoxLayout:
+		MDLabel:
+			theme_text_color: "Error"
+			id: content
+			valign: 'middle'
+			halign:'center'
+			font_style:"H6A"
+			text_size: content.width, content.height
+			text: app.fix_text("فشل الاتصال ، حاول مرة أخرى")
+
+<LoadingGif>:
+	AnchorLayout:
+		anchor_x: "center"
+		anchor_y: "center"
+		Image:
+			id: avatar
+			size_hint: None, None
+			size: "48dp", "48dp"
+			source: "loading.png"
+
+<infocard>:
+	layout_content: layout_content
+	GridLayout:
+		id: layout_content
+		cols:1
+		spacing: "10dp"
+		size_hint_y: None
+
+		MDLabel:
+			font_style:"H6A"
+			text_size: self.width, None
+			theme_text_color: "Primary"
+			halign:'right'
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: app.fix__article("التطبيق يستخدم خدمة الRSS للحصول على التقارير من موقع الوكالة الرسمي ، فجل ما يحتويه من محتوى  هو ملك الوكالة العمانية للأنباء.")
+
+		MDLabel:
+			font_style:"H6A"
+			text_size: self.width, None
+			theme_text_color: "Primary"
+			halign:'right'
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: app.fix_text("عن المطور:")
+
+		MDLabel:
+			font_style:"H6A"
+			text_size: self.width, None
+			theme_text_color: "Primary"
+			halign:'right'
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: app.fix__article("أهلا! أنا أحمد الهنائي. لست مبرمجا و هذا أول تطبيق لي.منذ فترة كنت أتابع الأخبار عن طريق تطبيق الوكالة ولكنه إختفى من المتجر ، و الموقع الرسمي  (كان) ليس مهيئا للإستخدام المحمول. لذلك ما حك جلدك مثل ظفرك :) ")
+
+
+<contactcard>:
+	layout_content: layout_content
+	GridLayout:
+		id: layout_content
+		cols:1
+		spacing: "10dp"
+		size_hint_y: None
+		MDLabel:
+			font_style:"H6A"
+			text: app.fix_text("للتواصل مع الوكالة:")
+			text_size: self.width, None
+			theme_text_color: "Primary"
+			halign:'right'
+			size_hint_y: None
+			height: self.texture_size[1]
+		OneLineIconListItem:
+			font_style:"Subtitle1"
+			text: "ONA@OMANINFO.OM"
+			text_size: self.width, None
+			theme_text_color: "Primary"
+			halign:'right'
+			size_hint_y: None
+			IconLeftWidget:
+				icon: "clipboard-text-multiple-outline"
+				on_release:
+					Clipboard.copy("ONA@OMANINFO.OM")
+					Snackbar(text=app.fix_text("تم النسخ"), padding="20dp").open()
+		OneLineIconListItem:
+			font_style:"Subtitle1"
+			text: "0096829943300"
+			text_size: self.width, None
+			theme_text_color: "Primary"
+			halign:'right'
+			size_hint_y: None
+			IconLeftWidget:
+				icon: "clipboard-text-multiple-outline"
+				on_release:
+					Clipboard.copy("0096829943300")
+					Snackbar(text=app.fix_text("تم النسخ"), padding="20dp").open()
+
+		MDLabel:
+			font_style:"H6A"
+			text: app.fix_text("للتواصل مع المطور:")
+			text_size: self.width, None
+			theme_text_color: "Primary"
+			halign:'right'
+			size_hint_y: None
+			height: self.texture_size[1]
+		OneLineIconListItem:
+			font_style:"Subtitle1"
+			text: "ahmedhinaibuilds@gmail.com"
+			text_size: self.width, None
+			theme_text_color: "Primary"
+			halign:'right'
+			size_hint_y: None
+			IconLeftWidget:
+				icon: "clipboard-text-multiple-outline"
+				on_release:
+					Clipboard.copy("ahmedhinaibuilds@gmail.com")
+					Snackbar(text=app.fix_text("تم النسخ"), padding="20dp").open()	
+<NewsCard>:
+	size_hint_y: None
+	height: content.height
+	BoxLayout:
+		ThreeLineListItem:
+			id: content
+			theme_text_color: "Primary"
+			font_style: "BodyA"
+			text: root.text
+			secondary_font_style:"Caption"
+			secondary_text: root.secondary_text
+			on_release: 
+				app.screen_manager("article_screen")
+				app.screen.ids.article_box.clear_widgets()
+				app.loading_callback_latest(root.link, root.text, root.secondary_text)
+
+
+<NewsArticle>
+	layout_content: layout_content
+	bar_color: .0, .0, .0, .0
+	bar_inactive_color: .0, .0, .0, .0
+	scroll_timeout : 120
+	scroll_distance: 10
+	GridLayout:
+		id: layout_content
+		cols:1
+		spacing: "10dp"
+		size_hint_y: None
+
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			font_size: "20dp"
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.title
+			halign:'right'
+			font_name: "Janna LT Bold"
+
+		MDLabel:
+			theme_text_color: "Secondary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.date
+			halign:'right'
+			font_name: "Janna LT Bold"
+
+		MDLabel:
+			theme_text_color: "Secondary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: app.fix__headline("الكاتب"+": "+str(root.author))
+			halign:'right'
+			font_name: "Janna LT Bold"
+		BoxLayout:
+			MDIconButton:
+
+				icon: "clipboard-text-multiple-outline"
+				on_release:
+					Clipboard.copy(root.link)
+					Snackbar(text=app.fix_text("تم نسخ  الرابط "), padding="20dp").open()
+			MDIconButton:
+				icon: "share"
+				on_release:
+					import webbrowser
+					webbrowser.open(root.link)
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: root.text
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: root.text1
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: root.text2
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: root.text3
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: root.text4
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text: root.text5
+			halign:'right'
+			font_name: "Janna LT Bold"
+			
+<NewsArticleWithImage>
+	layout_content: layout_content
+	bar_color: .0, .0, .0, .0
+	bar_inactive_color: .0, .0, .0, .0
+
+	scroll_timeout : 120
+	scroll_distance: 10
+	GridLayout:
+		id: layout_content
+		cols:1
+		spacing: "10dp"
+		size_hint_y: None
+		AnchorLayout:
+			anchor_x: "right"
+			anchor_y: "top"
+			size_hint_y: None
+			height: img.height
+			AsyncImage: 
+				id: img
+				halign:'right'
+				source: root.image
+				size: Window.width, Window.height/3
+				keep_ratio: True
+				allow_stretch: False
+
+
+
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			font_size: "20dp"
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.title
+			halign:'right'
+			font_name: "Janna LT Bold"
+
+		MDLabel:
+			theme_text_color: "Secondary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.date
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Secondary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: app.fix__headline("الكاتب"+": "+str(root.author))
+			halign:'right'
+			font_name: "Janna LT Bold"
+		BoxLayout:
+			MDIconButton:
+
+				icon: "clipboard-text-multiple-outline"
+				on_release:
+					Clipboard.copy(root.link)
+					Snackbar(text=app.fix_text("تم نسخ  الرابط "), padding="20dp").open()
+			MDIconButton:
+				icon: "share"
+				on_release:
+					import webbrowser
+					webbrowser.open(root.link)
+		MDLabel:
+			markup: True
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.text
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.text1
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.text2
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.text3
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.text4
+			halign:'right'
+			font_name: "Janna LT Bold"
+		MDLabel:
+			theme_text_color: "Primary"
+			size_hint_y: None
+			height: self.texture_size[1]
+			text_size: self.width, None
+			text: root.text5
+			halign:'right'
+			font_name: "Janna LT Bold"
+
+Screen:
+
+	MDNavigationLayout:
+		id: nav_layout
+		x: -toolbar.height #making this negative fixes the issue where right navigation drawer leaves full opacity area on the left
+		do_scroll_x: False
+		ScreenManager:
+			id: screen_manager
+
+
+
+
+			Screen:
+				name: "scr 1"
+				id:scr1
+				GridLayout:
+					cols: 1
+
+					MDTopAppBar:
+						md_bg_color: app.theme_cls.primary_color
+						background_palette: 'Primary'
+						id: toolbar
+						pos_hint: {"top": 1}
+						elevation: 10
+						opposite_colors: True
+						title: app.fix_text("آخر الأخبار")
+						font_style: "H6A"
+						halign: "middle"
+						right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+						left_action_items: [["cog", lambda x: app.screen_manager("settings")]]
+
+					MDScrollViewRefreshLayout:
+						
+						id: refresh_layout1
+						do_scroll_x: False
+						refresh_callback: app.refresh_callback
+						root_layout: root
+						bar_color: .0, .0, .0, .0
+						bar_inactive_color: .0, .0, .0, .0
+						scroll_timeout : 120
+						scroll_distance: 10
+						GridLayout:
+							cols:1
+							height: self.minimum_height
+							size_hint_y: None
+							id: md_list1
+
+
+			Screen:
+				name: "scr 0"
+				id:scr0
+				GridLayout:
+					cols:1
+					do_scroll_x: False
+					FloatLayout:
+
+						MDFillRoundFlatButton:
+							ripple_alpha: 0
+							size_hint:(.2, .1)
+							pos_hint:{'center_x':.7, 'center_y':.5}
+							md_bg_color: app.theme_cls.primary_color
+							text: app.fix_text("إرجع")
+							font_name: 'Janna LT Bold'
+							on_release:
+								app.screen_manager(app.screen_list[-2])
+
+						MDFillRoundFlatButton:
+							ripple_alpha: 0
+							size_hint:(.2, .1)
+							pos_hint:{'center_x':.3, 'center_y':.5}
+							md_bg_color: app.theme_cls.primary_color
+							text: app.fix_text("أخرج")
+							font_name: 'Janna LT Bold'
+							on_release:
+								app.get_running_app().stop()
+
+
+
+
+
+
+
+
+
+
+
+
+			Screen:
+				name: "article_screen"
+				id: artscr
+				GridLayout:
+					cols:1
+					spacing: '20dp'
+					MDTopAppBar: 
+						md_bg_color: app.theme_cls.primary_color
+						background_palette: 'Primary'
+						id: toolbar
+						pos_hint: {"top": 1}
+						elevation: 10
+						title: ""
+						left_action_items: [["arrow-left", lambda x: app.screen_manager(app.screen_list[-2])]]
+
+					GridLayout:
+						cols:1
+						id:article_box
+						padding: "10dp", "10dp"
+
+
+
+
+
+			Screen:
+				name: "settings"
+				id: settiings
+				GridLayout:
+					cols:1
+					MDTopAppBar: 
+						md_bg_color: app.theme_cls.primary_color
+						background_palette: 'Primary'
+						id: toolbar
+						pos_hint: {"top": 1}
+						elevation: 10
+						font_style:"H6A"
+						title: app.fix_text("إعدادات")
+						left_action_items: [["arrow-left", lambda x:  app.screen_manager("scr 1") ]]
+					MDList:
+						id: md_list_settings
+						height: content.height
+
+						OneLineListItem:
+							ripple_alpha: 0
+							MDLabel:
+								theme_text_color: "Primary"
+								id: content
+								pos_hint:{'center_x': .4, 'center_y': .5}
+								text_size: content.width, content.height
+								valign: 'middle'
+								halign:'right'
+								font_style:"H6A"
+								text: app.fix_text("الوضع المظلم")
+								
+
+							MDSwitch:
+								id: dark_switch
+								pos_hint: {'center_x': .3, 'center_y': .5}
+								active: app.amiactive()
+								on_active:
+									app.on_start()
+
+						TwoLineListItem:
+							ripple_alpha: 0
+							MDLabel:
+								theme_text_color: "Primary"
+								id: content
+								pos_hint:{'center_x': .4, 'center_y': .52}
+								text_size: content.width, content.height
+								valign: 'top'
+								halign:'right'
+								font_style:"H6A"
+								text: app.fix_text("عرض الصور مع المقالات")
+							MDLabel:
+								theme_text_color: "Hint"
+								id: content
+								pos_hint:{'center_x': .4, 'center_y': .29}
+								text_size: content.width, content.height
+								valign: 'top'
+								halign:'right'
+								font_style:"H6A"
+								text: app.fix_text("يستخدم المزيد من البيانات")
+								
+
+							MDSwitch:
+								id: image_switch
+								pos_hint: {'center_x': .3, 'center_y': .4}
+								active: app.amiactive_image()
+								on_active:
+									app.on_start_image()
+
+
+
+						OneLineListItem:
+							ripple_alpha: 0
+							on_release:
+								app.screen_manager("info")
+								app.screen.ids.info_box.clear_widgets()
+								app.set_info()
+							MDLabel:
+								theme_text_color: "Primary"
+								id: content
+								pos_hint:{'center_x': .4, 'center_y': .45}
+								text_size: content.width, content.height
+								valign: 'center'
+								halign:'right'
+								font_style:"H6A"
+								text: app.fix_text("عنا")
+
+						OneLineListItem:
+							ripple_alpha: 0
+							on_release:
+								app.screen_manager("contact")
+								app.screen.ids.contact_box.clear_widgets()
+								app.set_contact()
+							MDLabel:
+								theme_text_color: "Primary"
+								id: content
+								pos_hint:{'center_x': .4, 'center_y': .45}
+								text_size: content.width, content.height
+								valign: 'center'
+								halign:'right'
+								font_style:"H6A"
+								text: app.fix_text("للتواصل")
+								
+
+								
+
+
+			Screen:
+				name: "info"
+				GridLayout:
+					cols: 1
+					spacing: '20dp'
+
+					MDTopAppBar: 
+						md_bg_color: app.theme_cls.primary_color
+						background_palette: 'Primary'
+						id: toolbar
+						pos_hint: {"top": 1}
+						elevation: 10
+						title: app.fix_text("عنا")
+						left_action_items: [["arrow-left", lambda x: app.screen_manager("settings")]]
+
+
+					BoxLayout:
+						padding: "10dp", "10dp" 
+						id:info_box
+			Screen:
+				name: "contact"
+				GridLayout:
+					cols: 1
+					spacing: '20dp'
+
+					MDTopAppBar: 
+						md_bg_color: app.theme_cls.primary_color
+						background_palette: 'Primary'
+						id: toolbar
+						pos_hint: {"top": 1}
+						elevation: 10
+						title: app.fix_text("للتواصل")
+						left_action_items: [["arrow-left", lambda x: app.screen_manager("settings")]]
+
+
+					BoxLayout:
+						padding: "10dp", "10dp" 
+						id:contact_box
+
+
+		MDNavigationDrawer:
+			do_scroll_x: False
+			id: nav_drawer
+			anchor: 'right'
+			elevation: 0
+			ContentNavigationDrawer:
+				id: cnav_drawer
+				screen_manager: screen_manager
+				nav_drawer: nav_drawer
